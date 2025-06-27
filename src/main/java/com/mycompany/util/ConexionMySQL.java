@@ -1,10 +1,10 @@
-package com.mycompany.bd;
+package com.mycompany.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class Conexion {
+public class ConexionMySQL {
     protected Connection conexion;
     private static final String URL = "jdbc:mysql://localhost:3306/ferreyrosg6";
     private static final String USER = "root";

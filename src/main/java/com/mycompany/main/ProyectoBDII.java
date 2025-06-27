@@ -1,9 +1,9 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
-package com.mycompany.proyectobdii;
+package com.mycompany.main;
 
-import com.mycompany.bd.Conexion;
+import com.mycompany.util.ConexionMySQL;
 import java.sql.Connection;
 
 /**
@@ -13,9 +13,9 @@ import java.sql.Connection;
 public class ProyectoBDII {
 
     public static void main(String[] args) {
-        Conexion c = new Conexion();
+        ConexionMySQL c = new ConexionMySQL();
         Connection cn = c.conectar();
-
+        
         System.out.println("Hello World!");
     }
 }
