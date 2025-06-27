@@ -15,7 +15,7 @@ y un módulo adicional de chat con roles y seguridad utilizando **MongoDB** (NoS
 
 ---
 
-## 🛠️ Funcionalidades Principales
+## Funcionalidades Principales
 
 - Registro y gestión de **clientes, proveedores, colaboradores, productos y sucursales**
 - Relación entre las entidades usando **llaves foráneas**
@@ -28,7 +28,7 @@ y un módulo adicional de chat con roles y seguridad utilizando **MongoDB** (NoS
 
 ---
 
-## 💾 Tecnologías utilizadas
+## Tecnologías utilizadas
 
 - Java (NetBeans, JDK 17+)
 - MySQL (Workbench o consola)
@@ -38,7 +38,7 @@ y un módulo adicional de chat con roles y seguridad utilizando **MongoDB** (NoS
 
 ---
 
-## ▶️ Cómo ejecutar
+## Cómo ejecutar
 
 ### 1. **Instalar las dependencias**
 - Tener Java JDK y NetBeans instalados
