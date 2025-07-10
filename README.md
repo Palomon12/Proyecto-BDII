@@ -1,4 +1,4 @@
-# 🚧 Proyecto FerreyrosG6 – Sistema de Gestión + Chat Minero (Java + MySQL + MongoDB)
+# 🚧 Proyecto FerreyrosG6 – Sistema de Gestión + Chat Minero (Java + MySQL + MongoDB(Documentado))
 
 -----------------INTEGRANTES
 | Nombre completo                   | Código UTP |
@@ -11,7 +11,6 @@
 | Jhon Franco Escriba Humpiri       | U23215626  |
 
 Este proyecto es un sistema de gestión empresarial desarrollado en **Java (por consola)** con conexión a una base de datos relacional (**MySQL**) 
-y un módulo adicional de chat con roles y seguridad utilizando **MongoDB** (NoSQL).
 
 ---
 
@@ -21,10 +20,6 @@ y un módulo adicional de chat con roles y seguridad utilizando **MongoDB** (NoS
 - Relación entre las entidades usando **llaves foráneas**
 - Operaciones CRUD completas implementadas en **clases DAO**
 - Validación de integridad con **triggers** en MySQL
-- Chat minero (MongoDB):
-  - Chats segmentados por sector
-  - Reporte y calificación de usuarios
-  - Rol de usuarios (seguridad en la comunicación)
 
 ---
 
@@ -32,7 +27,6 @@ y un módulo adicional de chat con roles y seguridad utilizando **MongoDB** (NoS
 
 - Java (NetBeans, JDK 17+)
 - MySQL (Workbench o consola)
-- MongoDB (Compass + Driver oficial)
 - GitHub (repositorio colaborativo)
 - Estructura por paquetes (`com.mycompany.dao`, `model`, `controller`, etc.)
 
@@ -42,7 +36,7 @@ y un módulo adicional de chat con roles y seguridad utilizando **MongoDB** (NoS
 
 ### 1. **Instalar las dependencias**
 - Tener Java JDK y NetBeans instalados
-- Instalar MySQL Server y MongoDB local
+- Instalar MySQL Server 
 - Clonar el repositorio con:  
   ```bash
   git clone https://github.com/tu_usuario/ferreyrosG6.git
