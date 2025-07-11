@@ -4,10 +4,27 @@
  */
 package com.mycompany.dao;
 
-/**
- *
- * @author Milagros
- */
+import com.mycompany.model.Sucursal;
+import java.util.ArrayList;
+import java.util.List;
+
 public class SucursalDAO {
-    
+    private List<Sucursal> sucursales = new ArrayList<>();
+
+    public void agregar(Sucursal s) {
+        sucursales.add(s);
+    }
+
+    public List<Sucursal> listar() {
+        return sucursales;
+    }
+
+    public Sucursal buscarPorId(int id) {
+        for (Sucursal s : sucursales) {
+            if (s.getId() == id) {
+                return s;
+            }
+        }
+        return null;
+    }
 }

@@ -4,10 +4,28 @@
  */
 package com.mycompany.dao;
 
-/**
- *
- * @author Milagros
- */
+import com.mycompany.model.Colaborador;
+import java.util.ArrayList;
+import java.util.List;
+
 public class ColaboradorDAO {
-    
+    private List<Colaborador> colaboradores = new ArrayList<>();
+
+    public void agregar(Colaborador c) {
+        colaboradores.add(c);
+    }
+
+    public List<Colaborador> listar() {
+        return colaboradores;
+    }
+
+    public List<Colaborador> listarPorSucursal(int idSucursal) {
+        List<Colaborador> resultado = new ArrayList<>();
+        for (Colaborador c : colaboradores) {
+            if (c.getSucursal().getId() == idSucursal) {
+                resultado.add(c);
+            }
+        }
+        return resultado;
+    }
 }

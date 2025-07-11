@@ -6,8 +6,37 @@ package com.mycompany.dao;
 
 /**
  *
- * @author Milagros
+ * @author JHON
  */
+import modelo.Proveedor;
+import java.sql.*;
+import java.util.*;
+
 public class ProveedorDAO {
-    
+    public List<Proveedor> listar() {
+        List<Proveedor> lista = new ArrayList<>();
+        String sql = "SELECT * FROM Proveedor";
+
+        try (Connection con = Conexion.getConexion();
+             Statement st = con.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Proveedor p = new Proveedor(
+                    rs.getString("ID_Proveedor"),
+                    rs.getString("Nombre_Proveedor"),
+                    rs.getString("Pais_Proveedor"),
+                    rs.getString("Sector_Proveedor"),
+                    rs.getInt("AñosRelacion")
+                );
+                lista.add(p);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return lista;
+    }
 }
+
