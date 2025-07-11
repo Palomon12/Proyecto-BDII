@@ -111,33 +111,76 @@ CREATE TABLE Operaciones (
     FOREIGN KEY (RUC_Cli) REFERENCES Cliente(RUC_Cli)
 );
 
--- 1)TRIGER PARA que los servicios (alquiler o venta) se registren automáticamente en esa tabla vía trigger
+/* ─────────────────────────────────────────────────────────────
+   T‑1  Inserta automáticamente la operación (Compra/Alquiler)
+   ───────────────────────────────────────────────────────────── */
 DELIMITER $$
-
 CREATE TRIGGER trg_insert_operacion_servicio
 AFTER INSERT ON Servicio
 FOR EACH ROW
 BEGIN
-  DECLARE tipo VARCHAR(20);
+  DECLARE vTipo ENUM('Compra','Alquiler');
 
-  -- Detectar tipo de operación por el nombre del servicio
-  IF LOWER(NEW.Nombre_Serv) LIKE '%alquiler%' THEN
-    SET tipo = 'Alquiler';
-  ELSEIF LOWER(NEW.Nombre_Serv) LIKE '%venta%' THEN
-    SET tipo = 'Compra';
-  ELSE
-    SET tipo = 'Otro'; -- No se insertará si no es compra o alquiler
+  IF  LOWER(NEW.Nombre_Serv) LIKE '%alquiler%' THEN
+      SET vTipo = 'Alquiler';
+  ELSEIF LOWER(NEW.Nombre_Serv) LIKE '%venta%'   THEN
+      SET vTipo = 'Compra';
   END IF;
 
-  -- Solo insertamos si es 'Alquiler' o 'Compra'
-  IF tipo IN ('Alquiler', 'Compra') THEN
-    INSERT INTO Operaciones (Tipo_Operacion, ID_Producto, ID_Servicio, RUC_Cli, Costo_Total)
-    VALUES (tipo, NULL, NEW.ID_Servicio, NEW.RUC_Cli, NEW.Tarifa_Base_Serv);
+  IF vTipo IS NOT NULL THEN
+      INSERT INTO Operaciones (Tipo_Operacion,ID_Producto,ID_Servicio,
+                               RUC_Cli,Costo_Total)
+      VALUES (vTipo,NULL,NEW.ID_Servicio,NEW.RUC_Cli,NEW.Tarifa_Base_Serv);
   END IF;
+END$$
+DELIMITER ;
+
+
+/* ─────────────────────────────────────────────────────────────
+   T‑2  Valida stock antes de registrar una operación de producto
+   ───────────────────────────────────────────────────────────── */
+DELIMITER $$
+
+CREATE TRIGGER trg_validar_stock_producto
+BEFORE INSERT ON Operaciones
+FOR EACH ROW
+BEGIN
+    -- Declare variables at the very beginning of the BEGIN...END block
+    DECLARE vStock INT;
+
+    -- Check if a product ID is provided for the new operation
+    IF NEW.ID_Producto IS NOT NULL THEN
+        -- Retrieve the current stock for the product from the 'Producto' table
+        SELECT Stock_Prod INTO vStock
+        FROM Producto
+        WHERE ID_Producto = NEW.ID_Producto;
+
+        -- Check if the stock is not available (NULL) or insufficient (less than 1)
+        IF vStock IS NULL OR vStock < 1 THEN
+            -- If stock is insufficient, raise an error to prevent the insert
+            SIGNAL SQLSTATE '45000'
+                SET MESSAGE_TEXT = 'No hay stock disponible para esta operación';
+        END IF;
+    END IF;
 END$$
 
 DELIMITER ;
 
+
+/* ─────────────────────────────────────────────────────────────
+   T‑3  Garantiza que el costo del servicio respete la tarifa base
+   ───────────────────────────────────────────────────────────── */
+DELIMITER $$
+CREATE TRIGGER trg_validar_tarifa_servicio
+BEFORE INSERT ON Servicio
+FOR EACH ROW
+BEGIN
+  IF NEW.Costo_Total < NEW.Tarifa_Base_Serv THEN
+     SIGNAL SQLSTATE '45000'
+       SET MESSAGE_TEXT = 'Costo_Total no puede ser menor que Tarifa_Base_Serv';
+  END IF;
+END$$
+DELIMITER ;
 
 -- Precarga de datos para la empresa:
 INSERT INTO Contacto_Cliente (Telefono_Cli, Correo_Cli) VALUES
