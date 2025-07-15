@@ -8,8 +8,7 @@ package com.mycompany.dao;
  *
  * @author JHON
  */
-import modelo.Producto;
-import modelo.Proveedor;
+import com.mycompany.model.*;
 import java.sql.*;
 import java.util.*;
 
