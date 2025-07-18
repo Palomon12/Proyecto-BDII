@@ -108,7 +108,7 @@ public class ProveedorController {
 
     public static void main(String[] args) {
         try (Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/FerreyrosG6", "root", "")) {
-            new ProductoController(conexion).iniciar();
+            new ProveedorController(conexion).iniciar();
         } catch (SQLException e) {
             System.err.println("Error conexión: " + e.getMessage());
         }
