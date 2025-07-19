@@ -16,6 +16,6 @@ public class ProyectoBDII {
         ConexionMySQL c = new ConexionMySQL();
         Connection cn = c.conectar();
         
-        System.out.println("Hello mundo como estas ,eh modificado!");
+        System.out.println("Hello mundo como estas ,eh modificado!, voy a tratar de hacero bien");
     }
 }
