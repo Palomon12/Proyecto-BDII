@@ -4,45 +4,30 @@
  */
 package com.mycompany.model;
 
-/**
- *
- * @author JHON
- */
 public class Proveedor {
-    private String id;
-    private String nombre;
+    private String idProveedor;
+    private String nombreMarca;
     private String pais;
-    private String sector;
+    private String lineaProducto;
     private int aniosRelacion;
 
-    public Proveedor() {}
-
-    public Proveedor(String id, String nombre, String pais, String sector, int aniosRelacion) {
-        this.id = id;
-        this.nombre = nombre;
+    public Proveedor(String idProveedor, String nombreMarca, String pais, String lineaProducto, int aniosRelacion) {
+        this.idProveedor = idProveedor;
+        this.nombreMarca = nombreMarca;
         this.pais = pais;
-        this.sector = sector;
+        this.lineaProducto = lineaProducto;
         this.aniosRelacion = aniosRelacion;
     }
 
-    // Getters y setters
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
-
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
-
+    public String getIdProveedor() { return idProveedor; }
+    public String getNombreMarca() { return nombreMarca; }
     public String getPais() { return pais; }
-    public void setPais(String pais) { this.pais = pais; }
-
-    public String getSector() { return sector; }
-    public void setSector(String sector) { this.sector = sector; }
-
+    public String getLineaProducto() { return lineaProducto; }
     public int getAniosRelacion() { return aniosRelacion; }
-    public void setAniosRelacion(int aniosRelacion) { this.aniosRelacion = aniosRelacion; }
 
-    @Override
-    public String toString() {
-        return nombre;
-    }
+    public void setIdProveedor(String idProveedor) { this.idProveedor = idProveedor; }
+    public void setNombreMarca(String nombreMarca) { this.nombreMarca = nombreMarca; }
+    public void setPais(String pais) { this.pais = pais; }
+    public void setLineaProducto(String lineaProducto) { this.lineaProducto = lineaProducto; }
+    public void setAniosRelacion(int aniosRelacion) { this.aniosRelacion = aniosRelacion; }
 }

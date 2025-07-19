@@ -4,39 +4,64 @@
  */
 package com.mycompany.dao;
 
-/**
- *
- * @author JHON
- */
-import com.mycompany.model.*;
+import com.mycompany.model.Proveedor;
 import java.sql.*;
 import java.util.*;
 
 public class ProveedorDAO {
-    public List<Proveedor> listar() {
+    private final Connection conexion;
+
+    public ProveedorDAO(Connection conexion) {
+        this.conexion = conexion;
+    }
+
+    public void insertarProveedor(Proveedor proveedor) throws SQLException {
+        String sql = "INSERT INTO Proveedor VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+            ps.setString(1, proveedor.getIdProveedor());
+            ps.setString(2, proveedor.getNombreMarca());
+            ps.setString(3, proveedor.getPais());
+            ps.setString(4, proveedor.getLineaProducto());
+            ps.setInt(5, proveedor.getAniosRelacion());
+            ps.executeUpdate();
+        }
+    }
+
+    public Proveedor buscarPorId(String id) throws SQLException {
+        String sql = "SELECT * FROM Proveedor WHERE ID_Proveedor = ?";
+        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+            ps.setString(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new Proveedor(
+                        rs.getString("ID_Proveedor"),
+                        rs.getString("Nombre_Marca_Pro"),
+                        rs.getString("Pais_Proveedor"),
+                        rs.getString("Linea_Producto_Proveedor"),
+                        rs.getInt("AñosRelacion_Proveedor")
+                    );
+                }
+            }
+        }
+        return null;
+    }
+
+    public List<Proveedor> listarProveedores() throws SQLException {
         List<Proveedor> lista = new ArrayList<>();
         String sql = "SELECT * FROM Proveedor";
-
-        try (Connection con = Conexion.getConexion();
-             Statement st = con.createStatement();
+        try (Statement st = conexion.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
-
             while (rs.next()) {
                 Proveedor p = new Proveedor(
                     rs.getString("ID_Proveedor"),
-                    rs.getString("Nombre_Proveedor"),
+                    rs.getString("Nombre_Marca_Pro"),
                     rs.getString("Pais_Proveedor"),
-                    rs.getString("Sector_Proveedor"),
-                    rs.getInt("AñosRelacion")
+                    rs.getString("Linea_Producto_Proveedor"),
+                    rs.getInt("AñosRelacion_Proveedor")
                 );
                 lista.add(p);
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-
         return lista;
     }
 }
-
