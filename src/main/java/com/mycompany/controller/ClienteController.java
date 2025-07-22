@@ -10,15 +10,10 @@ import com.mycompany.model.Cliente;
 import com.mycompany.model.ContactoCliente;
 import com.mycompany.model.Servicio;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- *
- * @author Milagros
- */
 public class ClienteController {
 
     private final ClienteDAO clienteDao;
@@ -34,12 +29,12 @@ public class ClienteController {
     public void iniciar() {
         boolean salir = false;
         while (!salir) {
-            System.out.println("\n=== MENÚ PRINCIPAL ===");
+            System.out.println("\n=== MENÚ DE CLIENTES ===");
             System.out.println("1. Registrar Cliente");
             System.out.println("2. Agregar Servicio a Cliente");
             System.out.println("3. Listar Clientes");
             System.out.println("4. Buscar Servicios por Cliente");
-            System.out.println("5. Salir");
+            System.out.println("5. Salir al menú principal");
             System.out.print("Seleccione una opción: ");
 
             int opcion = scanner.nextInt();
@@ -47,28 +42,15 @@ public class ClienteController {
 
             try {
                 switch (opcion) {
-                    case 1:
-                        registrarCliente();
-                        break;
-                    case 2:
-                        agregarServicioACliente();
-                        break;
-                    case 3:
-                        listarClientes();
-                        break;
-                    case 4:
-                        buscarServiciosPorCliente();
-                        break;
-                    case 5:
-                        salir = true;
-                        break;
-                    default:
-                        System.out.println("Opción no válida");
+                    case 1 -> registrarCliente();
+                    case 2 -> agregarServicioACliente();
+                    case 3 -> listarClientes();
+                    case 4 -> buscarServiciosPorCliente();
+                    case 5 -> salir = true;
+                    default -> System.out.println("Opción no válida");
                 }
             } catch (SQLException e) {
                 System.err.println("Error de base de datos: " + e.getMessage());
-            } catch (IllegalArgumentException e) {
-                System.err.println("Error: " + e.getMessage());
             }
         }
     }
@@ -98,7 +80,7 @@ public class ClienteController {
     }
 
     private void agregarServicioACliente() throws SQLException {
-        System.out.println("\n--- AGREGAR SERVICIO ---");
+        System.out.println("\n--- AGREGAR SERVICIO AL CLIENTE ---");
         System.out.print("RUC del cliente: ");
         String ruc = scanner.nextLine();
 
@@ -123,17 +105,16 @@ public class ClienteController {
         int idColab = scanner.nextInt();
         scanner.nextLine();
 
-        Servicio servicio = new Servicio(idServicio, nombreServ, descripcion, 
-                                      tarifa, idDepto, idColab, ruc);
-        
+        Servicio servicio = new Servicio(idServicio, nombreServ, descripcion, tarifa, idDepto, idColab, ruc);
         servicioDao.insertarServicio(servicio);
+
         System.out.println("✅ Servicio agregado exitosamente");
     }
 
     private void listarClientes() throws SQLException {
         System.out.println("\n--- LISTA DE CLIENTES ---");
         List<Cliente> clientes = clienteDao.listarClientes();
-        
+
         if (clientes.isEmpty()) {
             System.out.println("No hay clientes registrados");
             return;
@@ -151,9 +132,9 @@ public class ClienteController {
         System.out.println("\n--- SERVICIOS POR CLIENTE ---");
         System.out.print("Ingrese RUC del cliente: ");
         String ruc = scanner.nextLine();
-        
+
         List<Servicio> servicios = servicioDao.listarPorCliente(ruc);
-        
+
         if (servicios.isEmpty()) {
             System.out.println("El cliente no tiene servicios registrados");
             return;
@@ -165,19 +146,6 @@ public class ClienteController {
             System.out.println("Nombre: " + servicio.getNombreServ());
             System.out.println("Tarifa: S/" + servicio.getTarifaBaseServ());
             System.out.println("-----------------------");
-        }
-    }
-
-    public static void main(String[] args) {
-        String url = "jdbc:mysql://localhost:3306/FerreyrosG6";
-        String user = "tu_usuario";
-        String password = "tu_contraseña";
-
-        try (Connection conexion = DriverManager.getConnection(url, user, password)) {
-            ClienteController controller = new ClienteController(conexion);
-            controller.iniciar();
-        } catch (SQLException e) {
-            System.err.println("Error al conectar a la base de datos: " + e.getMessage());
         }
     }
 }
