@@ -123,7 +123,10 @@ public class ClienteController {
         for (Cliente cliente : clientes) {
             System.out.println("RUC: " + cliente.getRucCli());
             System.out.println("Nombre: " + cliente.getNombreCli());
+            System.out.println("Sector: " + cliente.getSectorCli());
             System.out.println("Teléfono: " + cliente.getContacto().getTelefonoCli());
+            System.out.println("Email: " + cliente.getContacto().getCorreoCli());
+            // Puedes imprimir ID de contacto si lo agregaste en el modelo
             System.out.println("-----------------------");
         }
     }
