@@ -128,4 +128,21 @@ public class ServicioDAO {
         }
         return servicios;
     }
+    
+    public List<Servicio> listarPorColaborador(int idColaborador) throws SQLException {
+    List<Servicio> servicios = new ArrayList<>();
+    String sql = "SELECT * FROM servicio WHERE ID_Colaborador = ?";
+    
+    try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+        ps.setInt(1, idColaborador);
+        
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                servicios.add(mapearServicio(rs));
+            }
+        }
+    }
+    return servicios;
+}
+
 }

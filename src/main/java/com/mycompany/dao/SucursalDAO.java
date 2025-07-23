@@ -27,4 +27,34 @@ public class SucursalDAO {
         }
         return null;
     }
+    
+    public boolean actualizar(Sucursal sucursalActualizada) {
+    for (int i = 0; i < sucursales.size(); i++) {
+        if (sucursales.get(i).getId() == sucursalActualizada.getId()) {
+            sucursales.set(i, sucursalActualizada);
+            return true;
+        }
+    }
+    return false;
+}
+    
+    public boolean eliminar(int id) {
+    Sucursal s = buscarPorId(id);
+    if (s != null) {
+        sucursales.remove(s);
+        return true;
+    }
+    return false;
+}
+
+    public List<Sucursal> buscarPorCiudad(String ciudad) {
+    List<Sucursal> resultado = new ArrayList<>();
+    for (Sucursal s : sucursales) {
+        if (s.getCiudad().equalsIgnoreCase(ciudad)) {
+            resultado.add(s);
+        }
+    }
+    return resultado;
+}
+
 }

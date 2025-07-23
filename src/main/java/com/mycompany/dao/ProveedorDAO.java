@@ -34,7 +34,7 @@ public class ProveedorDAO {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return new Proveedor(
-                        rs.getString("ID_Proveedor"),
+                        rs.getString("Id_Proveedor"),
                         rs.getString("Nombre_Marca_Pro"),
                         rs.getString("Pais_Proveedor"),
                         rs.getString("Linea_Producto_Proveedor"),
@@ -64,4 +64,29 @@ public class ProveedorDAO {
         }
         return lista;
     }
+    
+    public boolean actualizarProveedor(Proveedor proveedor) throws SQLException {
+    String sql = """
+        UPDATE Proveedor
+        SET Nombre_Marca_Pro = ?, Pais_Proveedor = ?, 
+            Linea_Producto_Proveedor = ?, AñosRelacion_Proveedor = ?
+        WHERE ID_Proveedor = ?
+        """;
+    try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+        ps.setString(1, proveedor.getNombreMarca());
+        ps.setString(2, proveedor.getPais());
+        ps.setString(3, proveedor.getLineaProducto());
+        ps.setInt(4, proveedor.getAniosRelacion());
+        ps.setString(5, proveedor.getIdProveedor());
+        return ps.executeUpdate() > 0;
+    }
+}
+    public boolean eliminarProveedor(String idProveedor) throws SQLException {
+    String sql = "DELETE FROM Proveedor WHERE ID_Proveedor = ?";
+    try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+        ps.setString(1, idProveedor);
+        return ps.executeUpdate() > 0;
+    }
+}
+
 }

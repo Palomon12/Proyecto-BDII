@@ -70,7 +70,7 @@ public class ProductoDAO {
         return lista;
     }
 
-    public List<Producto> buscarPorProveedor(int idProveedor) throws SQLException {
+    public List<Producto> buscarPorProveedor(String idProveedor) throws SQLException {
         List<Producto> lista = new ArrayList<>();
         String sql = """
             SELECT p.*, pr.Nombre_Marca_Pro, pr.Pais_Proveedor, 
@@ -80,7 +80,7 @@ public class ProductoDAO {
             WHERE pr.ID_Proveedor = ?
             """;
         try (PreparedStatement ps = conexion.prepareStatement(sql)) {
-            ps.setInt(1, idProveedor);
+            ps.setString(1, idProveedor);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Proveedor pr = new Proveedor(
@@ -107,4 +107,69 @@ public class ProductoDAO {
         }
         return lista;
     }
+    
+    public Producto buscarPorId(int idProducto) throws SQLException {
+    String sql = """
+        SELECT p.*, pr.Nombre_Marca_Pro, pr.Pais_Proveedor, 
+               pr.Linea_Producto_Proveedor, pr.AñosRelacion_Proveedor
+        FROM Producto p
+        JOIN Proveedor pr ON p.ID_Proveedor = pr.ID_Proveedor
+        WHERE p.ID_Producto = ?
+        """;
+    try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+        ps.setInt(1, idProducto);
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                Proveedor pr = new Proveedor(
+                    rs.getString("ID_Proveedor"),
+                    rs.getString("Nombre_Marca_Pro"),
+                    rs.getString("Pais_Proveedor"),
+                    rs.getString("Linea_Producto_Proveedor"),
+                    rs.getInt("AñosRelacion_Proveedor")
+                );
+                return new Producto(
+                    rs.getInt("ID_Producto"),
+                    rs.getString("Nombre_Producto"),
+                    rs.getString("Descripcion"),
+                    rs.getString("Tipo"),
+                    rs.getInt("Stock"),
+                    rs.getDouble("PrecioCompra"),
+                    rs.getDouble("PrecioAlquiler"),
+                    rs.getDouble("Precio"),
+                    pr
+                );
+            }
+        }
+    }
+    return null;
+}
+    
+    public boolean eliminarProducto(int idProducto) throws SQLException {
+    String sql = "DELETE FROM Producto WHERE ID_Producto = ?";
+    try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+        ps.setInt(1, idProducto);
+        return ps.executeUpdate() > 0;
+    }
+}
+    
+    public boolean actualizarProducto(Producto producto) throws SQLException {
+    String sql = """
+        UPDATE Producto SET Nombre_Producto = ?, Descripcion = ?, Tipo = ?, Stock = ?,
+                            PrecioCompra = ?, PrecioAlquiler = ?, Precio = ?, ID_Proveedor = ?
+        WHERE ID_Producto = ?
+        """;
+    try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+        ps.setString(1, producto.getNombre());
+        ps.setString(2, producto.getDescripcion());
+        ps.setString(3, producto.getTipo());
+        ps.setInt(4, producto.getStock());
+        ps.setDouble(5, producto.getPrecioCompra());
+        ps.setDouble(6, producto.getPrecioAlquiler());
+        ps.setDouble(7, producto.getPrecio());
+        ps.setString(8, producto.getProveedor().getIdProveedor());
+        ps.setInt(9, producto.getIdProducto());
+        return ps.executeUpdate() > 0;
+    }
+}
+
 }

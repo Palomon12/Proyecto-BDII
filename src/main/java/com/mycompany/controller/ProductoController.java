@@ -43,7 +43,7 @@ public class ProductoController {
     }
 
     // Buscar productos por proveedor
-    public List<Producto> buscarProductosPorProveedor(int idProveedor) throws SQLException {
+    public List<Producto> buscarProductosPorProveedor(String idProveedor) throws SQLException {
         return productoDao.buscarPorProveedor(idProveedor);
     }
 }
