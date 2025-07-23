@@ -29,6 +29,12 @@ public class Producto {
         this.precio = precio;
         this.proveedor = proveedor;
     }
+    public Producto(int idProducto, String nombre, double precio, Proveedor proveedor) {
+    this.idProducto = idProducto;
+    this.nombre = nombre;
+    this.precio = precio;
+    this.proveedor = proveedor;
+}
 
     public int getIdProducto() { return idProducto; }
     public String getNombre() { return nombre; }
