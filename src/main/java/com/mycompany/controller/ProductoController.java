@@ -8,6 +8,7 @@ import com.mycompany.dao.ProductoDAO;
 import com.mycompany.dao.ProveedorDAO;
 import com.mycompany.model.Producto;
 import com.mycompany.model.Proveedor;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -22,28 +23,51 @@ public class ProductoController {
         this.proveedorDao = new ProveedorDAO(conexion);
     }
 
-    // Registrar producto
+    // === PRODUCTO ===
+
     public void registrarProducto(Producto producto) throws SQLException {
         productoDao.insertarProducto(producto);
     }
 
-    // Registrar proveedor
-    public void registrarProveedor(Proveedor proveedor) throws SQLException {
-        proveedorDao.insertarProveedor(proveedor);
-    }
-
-    // Listar productos
     public List<Producto> listarProductos() throws SQLException {
         return productoDao.listarProductos();
     }
 
-    // Listar proveedores
+    public List<Producto> buscarProductosPorProveedor(String idProveedor) throws SQLException {
+        return productoDao.buscarPorProveedor(idProveedor);
+    }
+
+    public Producto buscarProductoPorId(int idProducto) throws SQLException {
+        return productoDao.buscarPorId(idProducto);
+    }
+
+    public boolean actualizarProducto(Producto producto) throws SQLException {
+        return productoDao.actualizarProducto(producto);
+    }
+
+    public boolean eliminarProducto(int idProducto) throws SQLException {
+        return productoDao.eliminarProducto(idProducto);
+    }
+
+    // === PROVEEDOR ===
+
+    public void registrarProveedor(Proveedor proveedor) throws SQLException {
+        proveedorDao.insertarProveedor(proveedor);
+    }
+
     public List<Proveedor> listarProveedores() throws SQLException {
         return proveedorDao.listarProveedores();
     }
 
-    // Buscar productos por proveedor
-    public List<Producto> buscarProductosPorProveedor(String idProveedor) throws SQLException {
-        return productoDao.buscarPorProveedor(idProveedor);
+    public Proveedor buscarProveedorPorId(String idProveedor) throws SQLException {
+        return proveedorDao.buscarPorId(idProveedor);
+    }
+
+    public boolean actualizarProveedor(Proveedor proveedor) throws SQLException {
+        return proveedorDao.actualizarProveedor(proveedor);
+    }
+
+    public boolean eliminarProveedor(String idProveedor) throws SQLException {
+        return proveedorDao.eliminarProveedor(idProveedor);
     }
 }
