@@ -3,36 +3,56 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.model;
-/**
- *
- * @author Milagros
- */
-public class Colaborador {
-    private int id;
-    private String nombre;
-    private String puesto;
-    private Sucursal sucursal;
 
-    public Colaborador(int id, String nombre, String puesto, Sucursal sucursal) {
-        this.id = id;
-        this.nombre = nombre;
-        this.puesto = puesto;
-        this.sucursal = sucursal;
+import java.util.Date;
+
+public class Colaborador {
+    private int idColaborador;
+    private String nombreCol;
+    private int departamentoId;
+    private String cargoCol;
+    private Date fechaContratacion;
+    private int idSucursal;
+    private double sueldoCol;
+
+    public Colaborador() {}
+
+    public Colaborador(int idColaborador, String nombreCol, int departamentoId, String cargoCol, Date fechaContratacion, int idSucursal, double sueldoCol) {
+        this.idColaborador = idColaborador;
+        this.nombreCol = nombreCol;
+        this.departamentoId = departamentoId;
+        this.cargoCol = cargoCol;
+        this.fechaContratacion = fechaContratacion;
+        this.idSucursal = idSucursal;
+        this.sueldoCol = sueldoCol;
     }
 
-    public int getId() { return id; }
-    public String getNombre() { return nombre; }
-    public String getPuesto() { return puesto; }
-    public Sucursal getSucursal() { return sucursal; }
+    public int getIdColaborador() { return idColaborador; }
+    public String getNombreCol() { return nombreCol; }
+    public int getDepartamentoId() { return departamentoId; }
+    public String getCargoCol() { return cargoCol; }
+    public Date getFechaContratacion() { return fechaContratacion; }
+    public int getIdSucursal() { return idSucursal; }
+    public double getSueldoCol() { return sueldoCol; }
 
-    public void setId(int id) { this.id = id; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
-    public void setPuesto(String puesto) { this.puesto = puesto; }
-    public void setSucursal(Sucursal sucursal) { this.sucursal = sucursal; }
+    public void setIdColaborador(int idColaborador) { this.idColaborador = idColaborador; }
+    public void setNombreCol(String nombreCol) { this.nombreCol = nombreCol; }
+    public void setDepartamentoId(int departamentoId) { this.departamentoId = departamentoId; }
+    public void setCargoCol(String cargoCol) { this.cargoCol = cargoCol; }
+    public void setFechaContratacion(Date fechaContratacion) { this.fechaContratacion = fechaContratacion; }
+    public void setIdSucursal(int idSucursal) { this.idSucursal = idSucursal; }
+    public void setSueldoCol(double sueldoCol) { this.sueldoCol = sueldoCol; }
 
     @Override
     public String toString() {
-        return "Colaborador{" + "id=" + id + ", nombre=" + nombre + ", puesto=" + puesto +
-                ", sucursal=" + sucursal.getNombre() + '}';
+        return "Colaborador{" +
+                "idColaborador=" + idColaborador +
+                ", nombreCol='" + nombreCol + '\'' +
+                ", departamentoId=" + departamentoId +
+                ", cargoCol='" + cargoCol + '\'' +
+                ", fechaContratacion=" + fechaContratacion +
+                ", idSucursal=" + idSucursal +
+                ", sueldoCol=" + sueldoCol +
+                '}';
     }
 }

@@ -1,23 +1,18 @@
-package com.mycompany.model;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+package com.mycompany.model;
 
-/**
- *
- * @author Milagros
- */
 public class Cliente {
  
     private String rucCli;
     private String nombreCli;
     private String sectorCli;
-    private ContactoCliente contacto; // Relación 1:1
+    private ContactoCliente contacto;
 
-    // --------------------- CONSTRUCTORES ---------------------
-    public Cliente() {} // Para JPA/Hibernate
+    public Cliente() {}
 
     public Cliente(String rucCli, String nombreCli, String sectorCli, ContactoCliente contacto) {
         setRucCli(rucCli);
@@ -26,7 +21,6 @@ public class Cliente {
         setContacto(contacto);
     }
 
-    // --------------------- GETTERS ---------------------
     public String getRucCli() {
         return rucCli;
     }
@@ -43,7 +37,6 @@ public class Cliente {
         return contacto;
     }
 
-    // --------------------- SETTERS CON VALIDACIONES ---------------------
     public void setRucCli(String rucCli) {
         if (rucCli == null || !rucCli.matches("\\d{11}")) {
             throw new IllegalArgumentException("RUC debe tener 11 dígitos");
@@ -55,8 +48,8 @@ public class Cliente {
         if (nombreCli == null || nombreCli.trim().isEmpty()) {
             throw new IllegalArgumentException("Nombre es obligatorio");
         }
-        if (nombreCli.length() > 50) {
-            throw new IllegalArgumentException("Nombre no puede exceder 50 caracteres");
+        if (nombreCli.length() > 20) { // ajustado a la BD
+            throw new IllegalArgumentException("Nombre no puede exceder 20 caracteres");
         }
         this.nombreCli = nombreCli.trim();
     }

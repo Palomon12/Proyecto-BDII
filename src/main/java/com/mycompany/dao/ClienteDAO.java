@@ -83,7 +83,7 @@ public class ClienteDAO {
                         rs.getString("Nombre_Cli"),
                         rs.getString("Sector_Cli"),
                         contacto
-                    );
+                    );  
                 }
             }
         }

@@ -22,7 +22,7 @@ public class ColaboradorDAO {
     public List<Colaborador> listarPorSucursal(int idSucursal) {
         List<Colaborador> resultado = new ArrayList<>();
         for (Colaborador c : colaboradores) {
-            if (c.getSucursal().getId() == idSucursal) {
+            if (c.getIdSucursal() == idSucursal) {
                 resultado.add(c);
             }
         }
