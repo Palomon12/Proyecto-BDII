@@ -4,26 +4,49 @@
  */
 package com.mycompany.model;
 
+
 public class Producto {
     private int idProducto;
     private String nombre;
+    private String descripcion;     
+    private String tipo;            
+    private int stock;              
+    private double precioCompra;    
+    private double precioAlquiler;  
     private double precio;
     private Proveedor proveedor;
 
-    public Producto(int idProducto, String nombre, double precio, Proveedor proveedor) {
+    public Producto(int idProducto, String nombre, String descripcion, String tipo,
+                    int stock, double precioCompra, double precioAlquiler,
+                    double precio, Proveedor proveedor) {
         this.idProducto = idProducto;
         this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.tipo = tipo;
+        this.stock = stock;
+        this.precioCompra = precioCompra;
+        this.precioAlquiler = precioAlquiler;
         this.precio = precio;
         this.proveedor = proveedor;
     }
 
     public int getIdProducto() { return idProducto; }
     public String getNombre() { return nombre; }
+    public String getDescripcion() { return descripcion; }          
+    public String getTipo() { return tipo; }                        
+    public int getStock() { return stock; }                       
+    public double getPrecioCompra() { return precioCompra; }        
+    public double getPrecioAlquiler() { return precioAlquiler; }    
     public double getPrecio() { return precio; }
     public Proveedor getProveedor() { return proveedor; }
 
     public void setIdProducto(int idProducto) { this.idProducto = idProducto; }
     public void setNombre(String nombre) { this.nombre = nombre; }
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }    // NUEVO
+    public void setTipo(String tipo) { this.tipo = tipo; }                                // NUEVO
+    public void setStock(int stock) { this.stock = stock; }                               // NUEVO
+    public void setPrecioCompra(double precioCompra) { this.precioCompra = precioCompra; } // NUEVO
+    public void setPrecioAlquiler(double precioAlquiler) { this.precioAlquiler = precioAlquiler; } // NUEVO
     public void setPrecio(double precio) { this.precio = precio; }
     public void setProveedor(Proveedor proveedor) { this.proveedor = proveedor; }
 }
