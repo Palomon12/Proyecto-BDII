@@ -33,8 +33,12 @@ public class ClienteController {
             System.out.println("1. Registrar Cliente");
             System.out.println("2. Agregar Servicio a Cliente");
             System.out.println("3. Listar Clientes");
-            System.out.println("4. Buscar Servicios por Cliente");
-            System.out.println("5. Salir al menú principal");
+            System.out.println("4. Buscar Cliente por RUC");
+            System.out.println("5. Buscar Servicios por Cliente");
+            System.out.println("6. Actualizar Cliente");
+            System.out.println("7. Eliminar Cliente");
+            System.out.println("8. Eliminar Servicio");
+            System.out.println("9. Salir al menú principal");
             System.out.print("Seleccione una opción: ");
 
             int opcion = scanner.nextInt();
@@ -45,12 +49,16 @@ public class ClienteController {
                     case 1 -> registrarCliente();
                     case 2 -> agregarServicioACliente();
                     case 3 -> listarClientes();
-                    case 4 -> buscarServiciosPorCliente();
-                    case 5 -> salir = true;
+                    case 4 -> buscarClientePorRuc();
+                    case 5 -> buscarServiciosPorCliente();
+                    case 6 -> actualizarCliente();
+                    case 7 -> eliminarCliente();
+                    case 8 -> eliminarServicio();
+                    case 9 -> salir = true;
                     default -> System.out.println("Opción no válida");
                 }
             } catch (SQLException e) {
-                System.err.println("Error de base de datos: " + e.getMessage());
+                System.err.println("❌ Error de base de datos: " + e.getMessage());
             }
         }
     }
@@ -126,8 +134,24 @@ public class ClienteController {
             System.out.println("Sector: " + cliente.getSectorCli());
             System.out.println("Teléfono: " + cliente.getContacto().getTelefonoCli());
             System.out.println("Email: " + cliente.getContacto().getCorreoCli());
-            // Puedes imprimir ID de contacto si lo agregaste en el modelo
             System.out.println("-----------------------");
+        }
+    }
+
+    private void buscarClientePorRuc() throws SQLException {
+        System.out.println("\n--- BUSCAR CLIENTE POR RUC ---");
+        System.out.print("Ingrese RUC: ");
+        String ruc = scanner.nextLine();
+
+        Cliente cliente = clienteDao.obtenerPorRuc(ruc);
+        if (cliente == null) {
+            System.out.println("Cliente no encontrado");
+        } else {
+            System.out.println("RUC: " + cliente.getRucCli());
+            System.out.println("Nombre: " + cliente.getNombreCli());
+            System.out.println("Sector: " + cliente.getSectorCli());
+            System.out.println("Teléfono: " + cliente.getContacto().getTelefonoCli());
+            System.out.println("Email: " + cliente.getContacto().getCorreoCli());
         }
     }
 
@@ -150,5 +174,56 @@ public class ClienteController {
             System.out.println("Tarifa: S/" + servicio.getTarifaBaseServ());
             System.out.println("-----------------------");
         }
+    }
+
+    private void actualizarCliente() throws SQLException {
+        System.out.println("\n--- ACTUALIZAR CLIENTE ---");
+        System.out.print("Ingrese RUC del cliente a actualizar: ");
+        String ruc = scanner.nextLine();
+
+        Cliente cliente = clienteDao.obtenerPorRuc(ruc);
+        if (cliente == null) {
+            System.out.println("❌ Cliente no encontrado");
+            return;
+        }
+
+        System.out.print("Nuevo nombre (" + cliente.getNombreCli() + "): ");
+        String nombre = scanner.nextLine();
+
+        System.out.print("Nuevo sector (" + cliente.getSectorCli() + "): ");
+        String sector = scanner.nextLine();
+
+        System.out.print("Nuevo teléfono (" + cliente.getContacto().getTelefonoCli() + "): ");
+        String telefono = scanner.nextLine();
+
+        System.out.print("Nuevo email (" + cliente.getContacto().getCorreoCli() + "): ");
+        String email = scanner.nextLine();
+
+        cliente.setNombreCli(nombre);
+        cliente.setSectorCli(sector);
+        cliente.getContacto().setTelefonoCli(telefono);
+        cliente.getContacto().setCorreoCli(email);
+
+        clienteDao.actualizarCliente(cliente);
+        System.out.println("✅ Cliente actualizado correctamente");
+    }
+
+    private void eliminarCliente() throws SQLException {
+        System.out.println("\n--- ELIMINAR CLIENTE ---");
+        System.out.print("Ingrese RUC del cliente a eliminar: ");
+        String ruc = scanner.nextLine();
+
+        clienteDao.eliminarCliente(ruc);
+        System.out.println("✅ Cliente eliminado correctamente");
+    }
+
+    private void eliminarServicio() throws SQLException {
+        System.out.println("\n--- ELIMINAR SERVICIO ---");
+        System.out.print("Ingrese ID del servicio a eliminar: ");
+        int idServicio = scanner.nextInt();
+        scanner.nextLine();
+
+        servicioDao.eliminarServicio(idServicio);
+        System.out.println("✅ Servicio eliminado correctamente");
     }
 }
