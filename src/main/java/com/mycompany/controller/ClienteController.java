@@ -33,13 +33,14 @@ public class ClienteController {
             System.out.println("1. Registrar Cliente");
             System.out.println("2. Agregar Servicio a Cliente");
             System.out.println("3. Listar Clientes");
-            System.out.println("4. Buscar Cliente por RUC");
-            System.out.println("5. Buscar Servicios por Cliente");
-            System.out.println("6. Actualizar Cliente");
-            System.out.println("7. Eliminar Cliente");
-            System.out.println("8. Eliminar Servicio");
-            System.out.println("9. Salir al menú principal");
-            System.out.println("10. Contar Clientes");
+            System.out.println("4. Listar todos los Servicios");
+            System.out.println("5. Buscar Cliente por RUC");
+            System.out.println("6. Buscar Servicios por Cliente");
+            System.out.println("7. Actualizar Cliente");
+            System.out.println("8. Eliminar Cliente");
+            System.out.println("9. Eliminar Servicio");
+            System.out.println("10. Salir al menú principal");
+            System.out.println("11. Contar Clientes");
             System.out.print("Seleccione una opción: ");
 
             int opcion = scanner.nextInt();
@@ -50,13 +51,14 @@ public class ClienteController {
                     case 1 -> registrarCliente();
                     case 2 -> agregarServicioACliente();
                     case 3 -> listarClientes();
-                    case 4 -> buscarClientePorRuc();
-                    case 5 -> buscarServiciosPorCliente();
-                    case 6 -> actualizarCliente();
-                    case 7 -> eliminarCliente();
-                    case 8 -> eliminarServicio();
-                    case 9 -> salir = true;
-                    case 10 -> {
+                    case 4 -> listarTodosLosServicios();
+                    case 5 -> buscarClientePorRuc();
+                    case 6 -> buscarServiciosPorCliente();
+                    case 7 -> actualizarCliente();
+                    case 8 -> eliminarCliente();
+                    case 9 -> eliminarServicio();
+                    case 10 -> salir = true;
+                    case 11 -> {
                       int total = contarClientes();
                       System.out.println("📊 Total de clientes registrados: " + total);
                      }
@@ -142,6 +144,29 @@ public class ClienteController {
             System.out.println("-----------------------");
         }
     }
+    
+    private void listarTodosLosServicios() throws SQLException {
+    System.out.println("\n--- LISTA DE SERVICIOS DISPONIBLES ---");
+
+    List<Servicio> servicios = servicioDao.listarTodos();
+
+    if (servicios.isEmpty()) {
+        System.out.println("No hay servicios registrados.");
+        return;
+    }
+
+    for (Servicio servicio : servicios) {
+        System.out.println("ID: " + servicio.getIdServicio());
+        System.out.println("Nombre: " + servicio.getNombreServ());
+        System.out.println("Descripción: " + servicio.getDescripcionServ());
+        System.out.println("Tarifa Base: S/" + servicio.getTarifaBaseServ());
+        System.out.println("Departamento ID: " + servicio.getDepartamentoId());
+        System.out.println("ID Colaborador: " + servicio.getIdColaborador());
+        System.out.println("Cliente RUC: " + servicio.getRucCli());
+        System.out.println("-----------------------------");
+    }
+}
+
 
     private void buscarClientePorRuc() throws SQLException {
         System.out.println("\n--- BUSCAR CLIENTE POR RUC ---");
