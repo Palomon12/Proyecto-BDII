@@ -30,6 +30,17 @@ public class Operacion {
         this.fechaOperacion = fechaOperacion;
         this.costoTotal = costoTotal;
     }
+    
+    // Constructor para actualizar (sin fecha)
+public Operacion(int idOperacion, String tipoOperacion, Integer idProducto, Integer idServicio, String rucCliente, double costoTotal) {
+    this.idOperacion = idOperacion;
+    this.tipoOperacion = tipoOperacion;
+    this.idProducto = idProducto;
+    this.idServicio = idServicio;
+    this.rucCliente = rucCliente;
+    this.costoTotal = costoTotal;
+}
+
 
     // Getters y Setters
     public int getIdOperacion() {

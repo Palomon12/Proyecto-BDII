@@ -64,4 +64,52 @@ public class OperacionDAO {
         }
         return lista;
     }
+        public void eliminar(int idOperacion) {
+        String sql = "DELETE FROM Operaciones WHERE ID_Operacion = ?";
+        try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
+            stmt.setInt(1, idOperacion);
+            int filas = stmt.executeUpdate();
+            if (filas > 0) {
+                System.out.println("✅ Operación eliminada correctamente.");
+            } else {
+                System.out.println("⚠️ No se encontró una operación con ese ID.");
+            }
+        } catch (SQLException e) {
+            System.err.println("❌ Error al eliminar operación: " + e.getMessage());
+        }
+    }
+
+    public void actualizar(Operacion o) {
+        String sql = "UPDATE Operaciones SET Tipo_Operacion = ?, ID_Producto = ?, ID_Servicio = ?, RUC_Cli = ?, Costo_Total = ? WHERE ID_Operacion = ?";
+        try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
+            stmt.setString(1, o.getTipoOperacion());
+
+            if (o.getIdProducto() != null) {
+                stmt.setInt(2, o.getIdProducto());
+            } else {
+                stmt.setNull(2, Types.INTEGER);
+            }
+
+            if (o.getIdServicio() != null) {
+                stmt.setInt(3, o.getIdServicio());
+            } else {
+                stmt.setNull(3, Types.INTEGER);
+            }
+
+            stmt.setString(4, o.getRucCliente());
+            stmt.setDouble(5, o.getCostoTotal());
+            stmt.setInt(6, o.getIdOperacion());
+
+            int filas = stmt.executeUpdate();
+            if (filas > 0) {
+                System.out.println("✅ Operación actualizada correctamente.");
+            } else {
+                System.out.println("⚠️ No se encontró la operación.");
+            }
+
+        } catch (SQLException e) {
+            System.err.println("❌ Error al actualizar operación: " + e.getMessage());
+        }
+    }
+
 }

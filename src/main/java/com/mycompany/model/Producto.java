@@ -13,12 +13,12 @@ public class Producto {
     private int stock;              
     private double precioCompra;    
     private double precioAlquiler;  
-    private double precio;
+
     private Proveedor proveedor;
 
     public Producto(int idProducto, String nombre, String descripcion, String tipo,
                     int stock, double precioCompra, double precioAlquiler,
-                    double precio, Proveedor proveedor) {
+                    Proveedor proveedor) {
         this.idProducto = idProducto;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -26,13 +26,13 @@ public class Producto {
         this.stock = stock;
         this.precioCompra = precioCompra;
         this.precioAlquiler = precioAlquiler;
-        this.precio = precio;
+
         this.proveedor = proveedor;
     }
     public Producto(int idProducto, String nombre, double precio, Proveedor proveedor) {
     this.idProducto = idProducto;
     this.nombre = nombre;
-    this.precio = precio;
+
     this.proveedor = proveedor;
 }
 
@@ -43,7 +43,7 @@ public class Producto {
     public int getStock() { return stock; }                       
     public double getPrecioCompra() { return precioCompra; }        
     public double getPrecioAlquiler() { return precioAlquiler; }    
-    public double getPrecio() { return precio; }
+
     public Proveedor getProveedor() { return proveedor; }
 
     public void setIdProducto(int idProducto) { this.idProducto = idProducto; }
@@ -53,6 +53,19 @@ public class Producto {
     public void setStock(int stock) { this.stock = stock; }                               // NUEVO
     public void setPrecioCompra(double precioCompra) { this.precioCompra = precioCompra; } // NUEVO
     public void setPrecioAlquiler(double precioAlquiler) { this.precioAlquiler = precioAlquiler; } // NUEVO
-    public void setPrecio(double precio) { this.precio = precio; }
+
     public void setProveedor(Proveedor proveedor) { this.proveedor = proveedor; }
+    
+    public String toString() {
+    return "Producto{" +
+            "ID=" + idProducto +
+            ", Nombre='" + nombre + '\'' +
+            ", Descripción='" + descripcion + '\'' +
+            ", Tipo='" + tipo + '\'' +
+            ", Stock=" + stock +
+            ", PrecioCompra=" + precioCompra +
+            ", PrecioAlquiler=" + precioAlquiler +
+            ", Proveedor=" + (proveedor != null ? proveedor.getIdProveedor() : "N/A") +
+            '}';
+}
 }

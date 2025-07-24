@@ -17,7 +17,7 @@ import java.util.Scanner;
  */
 public class ProyectoBDII {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         ConexionMySQL c = new ConexionMySQL();
         Connection cn = c.conectar();
 
