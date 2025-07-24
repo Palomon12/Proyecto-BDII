@@ -39,6 +39,7 @@ public class ClienteController {
             System.out.println("7. Eliminar Cliente");
             System.out.println("8. Eliminar Servicio");
             System.out.println("9. Salir al menú principal");
+            System.out.println("10. Contar Clientes");
             System.out.print("Seleccione una opción: ");
 
             int opcion = scanner.nextInt();
@@ -55,6 +56,10 @@ public class ClienteController {
                     case 7 -> eliminarCliente();
                     case 8 -> eliminarServicio();
                     case 9 -> salir = true;
+                    case 10 -> {
+                      int total = contarClientes();
+                      System.out.println("📊 Total de clientes registrados: " + total);
+                     }
                     default -> System.out.println("Opción no válida");
                 }
             } catch (SQLException e) {
@@ -225,5 +230,9 @@ public class ClienteController {
 
         servicioDao.eliminarServicio(idServicio);
         System.out.println("✅ Servicio eliminado correctamente");
+    }
+     // ✅ NUEVO MÉTODO PARA CONTAR CLIENTES
+    public int contarClientes() throws SQLException {
+        return clienteDao.contarClientes();
     }
 }

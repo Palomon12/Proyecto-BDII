@@ -177,4 +177,15 @@ public class ClienteDAO {
             conexion.setAutoCommit(true);
         }
     }
+    // CONTAR CLIENTES REGISTRADOS
+    public int contarClientes() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM Cliente";
+        try (PreparedStatement ps = conexion.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
+    }
 }
